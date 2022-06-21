@@ -1,30 +1,16 @@
-import CButton ,{ ButtonType , ButtonSize }from './components/button';
 function App() {
   return (
-    <div className="App" style={{ display:'flex',justifyContent:"space-around",width:"35rem" }}>
-      <CButton 
-        btnType={ ButtonType.Link }
-        size={ButtonSize.Large} 
-        href='http://baidu.com'>
-        hello 
-      </CButton>
-      <CButton 
-        btnType={ ButtonType.Default } 
-        size={ButtonSize.Large}> 
-        思思 
-      </CButton>
-      <CButton 
-        btnType={ ButtonType.Danger } 
-        size={ButtonSize.Small}> 
-        KD 
-      </CButton>
-      <CButton 
-        btnType={ ButtonType.Primary } 
-        size={ButtonSize.Large}> 
-        cherry 
-      </CButton>
+    <div className="App" style={{ 
+        height:"100vh", 
+        display:"flex",
+        justifyContent:"center",
+        alignItems:"center",
+        color: "#fff",
+        background: "linear-gradient(to right, #f6d365 0%, #fda085 100%)"}}>
+        <h1>
+          Welcome to Cdsign
+        </h1>
     </div>
   )
 }
-
 export default App
