@@ -1,4 +1,4 @@
-import CButton ,{ ButtonType , ButtonSize }from './CButton';
+import CButton ,{ ButtonType , ButtonSize }from './components/button';
 function App() {
   return (
     <div className="App" style={{ display:'flex',justifyContent:"space-around",width:"35rem" }}>
