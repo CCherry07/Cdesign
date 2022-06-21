@@ -1,4 +1,4 @@
-import CButton ,{  ButtonType , ButtonSize }from './c_button';
+import CButton ,{  ButtonType , ButtonSize }from './CButton';
 function App() {
   return (
     <div className="App">
@@ -12,7 +12,7 @@ function App() {
         btnType={ ButtonType.Default } 
         size={ButtonSize.Small}
         disabled={true}> 
-        撒大大 
+        思思 
       </CButton>
       <CButton 
         btnType={ ButtonType.Primary } 
