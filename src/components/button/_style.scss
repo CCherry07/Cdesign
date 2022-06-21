@@ -34,6 +34,7 @@
 .btn-primary {
   @include button-style($primary, $primary, $white)
 }
+
 .btn-danger {
   @include button-style($danger, $danger, $white)
 }

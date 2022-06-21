@@ -21,15 +21,19 @@ export interface BaseButtonProps {
   disabled?: boolean;
   /** 是否加载中 */
   loading?: boolean;
-  children?: React.ReactNode;
   className?: string;
   href?: string;
+  children?: React.ReactNode;
 }
 
-const CButton = (props:BaseButtonProps)=>{
-  const { btnType,size,
-          disabled,loading,href,
-          children,className } = props
+const Button = (props:BaseButtonProps)=>{
+  const { btnType,
+          size,
+          disabled,
+          loading,
+          href,
+          children,
+          className } = props
   const classes = classNames('btn',className,{
     [`btn-${btnType}`]:btnType,
     [`btn-${size}`]:size,
@@ -44,9 +48,9 @@ const CButton = (props:BaseButtonProps)=>{
   }
 }
 
-CButton.defaultProps = {
+Button.defaultProps = {
   disabled:false,
   btnType:ButtonType.Default
 }
 
-export default CButton
+export default Button
