@@ -10,9 +10,13 @@ function App() {
       </CButton>
       <CButton 
         btnType={ ButtonType.Default } 
-        size={ButtonSize.Small}
-        disabled={true}> 
+        size={ButtonSize.Large}> 
         思思 
+      </CButton>
+      <CButton 
+        btnType={ ButtonType.Danger } 
+        size={ButtonSize.Small}> 
+        KD 
       </CButton>
       <CButton 
         btnType={ ButtonType.Primary } 

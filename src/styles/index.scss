@@ -1,3 +1,6 @@
 @import "./_variables.scss";
 @import"./reboot";
-@import"../CButton/style"
+@import"./mixin";
+@import"../components/button/style";
+
+
