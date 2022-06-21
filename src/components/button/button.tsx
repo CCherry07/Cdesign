@@ -12,6 +12,8 @@ interface BaseButtonProps {
   size?: ButtonSize;
   /**设置 Button 的类型 */
   btnType?: ButtonType;
+  /**设置 Button 的加载状态 */
+  loading?: boolean;
   children: React.ReactNode;
   href?: string;
 }
@@ -27,6 +29,7 @@ export const Button: FC<ButtonProps> = (props) => {
     size,
     children,
     href,
+    loading,
     ...restProps
   } = props
 
