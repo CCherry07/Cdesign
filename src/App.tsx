@@ -1,7 +1,7 @@
-import CButton ,{  ButtonType , ButtonSize }from './CButton';
+import CButton ,{ ButtonType , ButtonSize }from './CButton';
 function App() {
   return (
-    <div className="App">
+    <div className="App" style={{ display:'flex',justifyContent:"space-around",width:"35rem" }}>
       <CButton 
         btnType={ ButtonType.Link }
         size={ButtonSize.Large} 
@@ -21,7 +21,6 @@ function App() {
       </CButton>
     </div>
   )
-
 }
 
 export default App
