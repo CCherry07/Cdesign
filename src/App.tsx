@@ -1,6 +1,4 @@
-
 import CButton ,{  ButtonType , ButtonSize }from './c_button';
-
 function App() {
   return (
     <div className="App">
