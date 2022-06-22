@@ -43,7 +43,7 @@ describe("test button",async()=>{
     expect(await screen.findByText("KD"))
   })
   it("test btn type is link and button that exists in href prop",async()=>{
-    const wrapper =  render(<Button {...testLinkProps}>cherry</Button>)
+    const wrapper =  render(<Button {...testLinkProps}>baidu.com</Button>)
     const element = wrapper.getByText('cherry') as HTMLLinkElement
     expect(element).toBeInTheDocument()
     expect(element.tagName).toEqual('A')
