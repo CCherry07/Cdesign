@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { createContext  , useState} from 'react'
 import classNames from 'classnames'
 import item from './menuItem'
 type MenuMode = "horizontal" | "vertical"
@@ -22,6 +22,7 @@ export interface Menu {
 }
 
 
+export const MenuContext = createContext<MenuContext>({ index:0 })
 
 const Menu:React.FC<MenuProps> = (props) =>{
   const { defaultIndext, className , mode , style ,onSelect, children} = props
@@ -41,7 +42,9 @@ const Menu:React.FC<MenuProps> = (props) =>{
   }
   return(
     <ul className={classes} style={style}>
-       { children }
+      <MenuContext.Provider value={passedContext}>
+          { children }
+      </MenuContext.Provider>
     </ul>
   )
 }
