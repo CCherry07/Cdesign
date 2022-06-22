@@ -11,6 +11,11 @@ const testProps: ButtonProps = {
   size: 'lg',
   className: 'klass'
 }
+const testLinkProps: ButtonProps = {
+  btnType: 'link',
+  href:"www.baidu.com",
+  size: 'lg',
+}
 
 const disabledProps: ButtonProps = {
   disabled: true,
@@ -38,6 +43,13 @@ describe("test button",async()=>{
     expect(await screen.findByText("KD"))
   })
   it("test btn type is link and button that exists in href prop",async()=>{
-    
+    const wrapper =  render(<Button {...testLinkProps}>cherry</Button>)
+    const element = wrapper.getByText('cherry') as HTMLLinkElement
+    expect(element).toBeInTheDocument()
+    expect(element.tagName).toEqual('A')
+    expect(element).toHaveClass('btn btn-link btn-lg')
+    expect(element.disabled).toBeFalsy()
+    userEvent.click(element)
+    expect(element).toHaveAttribute("href","www.baidu.com")
   })
 })
