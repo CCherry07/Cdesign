@@ -15,11 +15,11 @@ export interface MenuProps {
   children?: React.ReactNode
 }
 
-export interface MenuFc extends FC<MenuProps> {
+export interface MenuRc extends FC<MenuProps> {
   item:React.FC<MenuItemProps>
 }
 
-const Menu:MenuFc = (props) => {
+const Menu:MenuRc = (props) => {
   const {
     defaultIndext, className, mode, style, onSelect, children,
   } = props;
