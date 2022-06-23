@@ -20,6 +20,7 @@ specifiers:
   eslint: ^8.18.0
   eslint-config-airbnb: ^19.0.4
   eslint-config-airbnb-typescript: ^17.0.0
+  eslint-config-prettier: ^8.5.0
   eslint-plugin-import: ^2.26.0
   eslint-plugin-jsx-a11y: ^6.5.1
   eslint-plugin-prettier: ^4.0.0
@@ -29,6 +30,7 @@ specifiers:
   react: ^18.0.0
   react-dom: ^18.0.0
   sass: ^1.53.0
+  stylelint-config-prettier: ^9.0.3
   typescript: ^4.6.3
   vite: ^2.9.9
   vitest: ^0.15.2
@@ -41,11 +43,13 @@ dependencies:
   '@types/classnames': 2.3.1
   '@types/testing-library__jest-dom': 5.14.5
   classnames: 2.3.1
-  eslint-plugin-prettier: 4.0.0_eslint@8.18.0
+  eslint-config-prettier: 8.5.0_eslint@8.18.0
+  eslint-plugin-prettier: 4.0.0_ohknqdiadpdc4n44qqsbqlxxwa
   node-sass: 7.0.1
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   sass: 1.53.0
+  stylelint-config-prettier: 9.0.3
 
 devDependencies:
   '@babel/core': 7.18.5
@@ -2790,6 +2794,15 @@ packages:
       object.entries: 1.1.5
     dev: true
 
+  /eslint-config-prettier/8.5.0_eslint@8.18.0:
+    resolution: {integrity: sha512-obmWKLUNCnhtQRKc+tmnYuQl0pFU1ibYJQ5BGhTVB08bHe9wC8qUeG7c08dj9XX+AuPj1YSGSQIHl1pnDHZR0Q==}
+    hasBin: true
+    peerDependencies:
+      eslint: '>=7.0.0'
+    dependencies:
+      eslint: 8.18.0
+    dev: false
+
   /eslint-import-resolver-node/0.3.6:
     resolution: {integrity: sha512-0En0w03NRVMn9Uiyn8YRPDKvWjxCWkslUEhGNTdGx15RvPJYQ+lbOlqrlNI2vEAs4pDYK4f/HN2TbDmk5TP0iw==}
     dependencies:
@@ -2877,7 +2890,7 @@ packages:
       minimatch: 3.1.2
     dev: true
 
-  /eslint-plugin-prettier/4.0.0_eslint@8.18.0:
+  /eslint-plugin-prettier/4.0.0_ohknqdiadpdc4n44qqsbqlxxwa:
     resolution: {integrity: sha512-98MqmCJ7vJodoQK359bqQWaxOE0CS8paAz/GgjaZLyex4TTk3g9HugoO89EqWCrFiOqn9EVvcoo7gZzONCWVwQ==}
     engines: {node: '>=6.0.0'}
     peerDependencies:
@@ -2889,6 +2902,7 @@ packages:
         optional: true
     dependencies:
       eslint: 8.18.0
+      eslint-config-prettier: 8.5.0_eslint@8.18.0
       prettier-linter-helpers: 1.0.0
     dev: false
 
@@ -5049,6 +5063,14 @@ packages:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
     dev: true
+
+  /stylelint-config-prettier/9.0.3:
+    resolution: {integrity: sha512-5n9gUDp/n5tTMCq1GLqSpA30w2sqWITSSEiAWQlpxkKGAUbjcemQ0nbkRvRUa0B1LgD3+hCvdL7B1eTxy1QHJg==}
+    engines: {node: '>= 12'}
+    hasBin: true
+    peerDependencies:
+      stylelint: '>=11.0.0'
+    dev: false
 
   /supports-color/5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
