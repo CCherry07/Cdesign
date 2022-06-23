@@ -1,5 +1,5 @@
-import { render , userEvent , screen, RenderResult} from '../../utils/test.utils'
-import { it , expect  } from 'vitest';
+import { render , userEvent , screen, RenderResult, fireEvent} from '../../utils/test.utils'
+import { it , expect, vi  } from 'vitest';
 import Menu , { MenuProps } from './menu';
 import React from 'react';
 
@@ -10,6 +10,7 @@ const testProps:MenuProps = {
   },
   className:"test"
 }
+
 const modeProps:MenuProps = {
   defaultIndext:0,
   mode:"vertical"
@@ -30,7 +31,7 @@ describe("test Menu",async()=>{
     activeItem = wrapper.getByText("cherry")
     disabledItem = wrapper.getByText("KD")
   })
-  
+
   it("test The Default Menu",async()=>{
       expect(menuItem).toBeInTheDocument()
       expect(menuItem.tagName).toEqual('UL')
@@ -41,9 +42,17 @@ describe("test Menu",async()=>{
       userEvent.click(menuItem)
       expect(await screen.findByText("KD"))
   })
-  // it("testing different item is different behaviors",async()=>{
-   
-  // })
+  it("testing different item is different behaviors",async()=>{
+    const thirdItem = wrapper.getByText("SIS")
+    fireEvent.click(thirdItem)
+    vi.spyOn(testProps,"onSelect")
+    // expect(vi.spyOn(testProps,"onSelect")).toHaveBeenCalledWith(2)
+    expect(thirdItem).toHaveClass("is-active")
+    expect(activeItem).not.toHaveClass("is-active")
+    fireEvent.click(disabledItem)
+    expect(disabledItem).not.toHaveClass("is-active")
+    expect(testProps.onSelect).not.toHaveBeenCalledWith(1)
+  })
   // it("test different mode style layouts",async()=>{
    
   // })
