@@ -8,7 +8,7 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-App.tsx
+src/App.tsx
 coverage
 dist
 dist-ssr
