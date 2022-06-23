@@ -1,20 +1,23 @@
-import { useState } from "react";
-import Switch from "./components/switch"
+import React, { useState } from 'react';
+import Switch from './components/switch';
 
 function App() {
-  let [state, setState] = useState(false);
+  const [state, setState] = useState(false);
   return (
-    <div className="App" style={{
-      height: "100vh",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      color: "#fff",
-      background: "linear-gradient(to right, #f6d365 0%, #fda085 100%)"
-    }}>
-      <p onClick={() => setState(!state)}>{state ? "对" : "错"}</p>
+    <div
+      className="App"
+      style={{
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: '#fff',
+        background: 'linear-gradient(to right, #f6d365 0%, #fda085 100%)',
+      }}
+    >
+      <p onClick={() => setState(!state)}>{state ? '对' : '错'}</p>
       <Switch checked={state} />
     </div>
-  )
+  );
 }
-export default App
+export default App;
