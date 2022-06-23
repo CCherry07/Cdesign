@@ -10,7 +10,7 @@ const defaultProps = {
 const testProps: ButtonProps = {
   btnType: 'primary',
   size: 'lg',
-  className: 'klass',
+  className: 'class',
 };
 const testLinkProps: ButtonProps = {
   btnType: 'link',
