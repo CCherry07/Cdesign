@@ -1,6 +1,8 @@
-import React, { createContext  , useState} from 'react'
+import React, { useState } from 'react'
+import type { FC } from 'react'
 import classNames from 'classnames'
-import item from './menuItem'
+import item, { MenuItemProps } from './menuItem'
+import { MenuContext } from './MenuContext'
 type MenuMode = "horizontal" | "vertical"
 type onSelect = (selectIndex:number)=>void
 export interface MenuProps {
@@ -12,19 +14,12 @@ export interface MenuProps {
   children?: React.ReactNode
 }
 
-interface MenuContext {
-  index:number
-  onSelect?: onSelect
-}
-
-export interface Menu {
-  item:React.ReactNode
+export interface MenuFc extends FC<MenuProps> {
+  item:React.FC<MenuItemProps>
 }
 
 
-export const MenuContext = createContext<MenuContext>({ index:0 })
-
-const Menu:React.FC<MenuProps> = (props) =>{
+const Menu:MenuFc = (props) =>{
   const { defaultIndext, className , mode , style ,onSelect, children} = props
   const [currentActive, setActive] = useState(defaultIndext)
   const classes = classNames("viking-menu" , className , {
