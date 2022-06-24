@@ -1,20 +1,18 @@
-import { useState } from "react";
-import Switch from "./components/switch"
-
 function App() {
-  let [state, setState] = useState(false);
   return (
-    <div className="App" style={{
-      height: "100vh",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      color: "#fff",
-      background: "linear-gradient(to right, #f6d365 0%, #fda085 100%)"
-    }}>
-      <p onClick={() => setState(!state)}>{state ? "对" : "错"}</p>
-      <Switch checked={state} />
+    <div
+      className="App"
+      style={{
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: '#fff',
+        background: 'linear-gradient(to right, #f6d365 0%, #fda085 100%)',
+      }}
+    >
+      welcome to cdsign
     </div>
-  )
+  );
 }
-export default App
+export default App;

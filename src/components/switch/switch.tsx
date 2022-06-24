@@ -1,26 +1,24 @@
-import { FC } from "react";
-import classNames from "classnames";
-import { useState } from "react";
-import { useEffect } from "react";
+import React, { FC, useState, useEffect } from 'react';
 
-export type SwitchSize = 'lg' | 'sm'
+export type SwitchSize = 'lg' | 'sm';
 
 interface SwitchProps {
-    className?: string
-    size?: SwitchSize
-    checked?: boolean
+  checked?: boolean
 }
 
-export const Switch: FC<SwitchProps> = (props) => {
-    const { className, size, checked } = props
-    const [state, setState] = useState(checked)
-    useEffect(() => setState(checked), [checked])
-    return (
-        <label className="switch">
-            <input type="checkbox" checked={state} />
-            <span className="slider"></span>
-        </label>
-    )
-}
+export const Switch: FC<SwitchProps> = ({ checked = false }) => {
+  const [state, setState] = useState(checked);
+  useEffect(() => setState(checked), [checked]);
+  return (
+    <label className="switch">
+      <input type="checkbox" checked={state} defaultChecked />
+      <span className="slider" />
+    </label>
+  );
+};
+
+Switch.defaultProps = {
+  checked: true,
+};
 
 export default Switch;
