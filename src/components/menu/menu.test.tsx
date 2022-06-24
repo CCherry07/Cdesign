@@ -1,5 +1,6 @@
-import { render , userEvent , screen, RenderResult, fireEvent} from '../../utils/test.utils'
-import { it , expect, vi  } from 'vitest';
+import { render , userEvent , screen, RenderResult, fireEvent ,cleanup} from '../../utils/test.utils'
+
+import { it , expect, vi} from 'vitest';
 import Menu , { MenuProps } from './menu';
 import React from 'react';
 
@@ -13,11 +14,11 @@ const testProps:MenuProps = {
 
 const modeProps:MenuProps = {
   defaultIndext:0,
-  mode:"vertical"
+  mode:"vertical",
 }
 
 const TestMenu:React.FC<MenuProps> = (props)=>{
-  return <Menu {...props}>
+  return <Menu {...props} data-testid="test-menu">
     <Menu.item index={0}>cherry</Menu.item>
     <Menu.item index={1} disabled>KD</Menu.item>
     <Menu.item index={2}>SIS</Menu.item>
@@ -53,9 +54,13 @@ describe("test Menu",async()=>{
     expect(disabledItem).not.toHaveClass("is-active")
     expect(testProps.onSelect).not.toHaveBeenCalledWith(1)
   })
-  // it("test different mode style layouts",async()=>{
-   
-  // })
+  it("test different mode style layouts",async()=>{
+    cleanup()
+    const modeWrapper = render(<TestMenu {...modeProps}></TestMenu>)
+    const modeMenu = modeWrapper.getByTestId("test-menu")
+    expect(modeMenu.tagName).toEqual('UL')
+    expect(modeMenu).toHaveClass("menu-vertical")
+  })
 })
 
 
