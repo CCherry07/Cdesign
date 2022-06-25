@@ -1,5 +1,7 @@
 import classNames from "classnames"
-import React, { useContext, useState } from "react"
+import React, { ReactNode, useContext, useState } from "react"
+import QueueAnim from 'rc-queue-anim';
+import Icon from "../icon"
 import { MenuContext }  from './MenuContext'
 import { MenuItemProps } from "./menuItem"
 export interface SubMenuProps {
@@ -15,7 +17,10 @@ const SubMenu:React.FC<SubMenuProps> = (props)=>{
   const isOpend = (index && context.mode === "vertical") ? (defaultOpenSubMenus || []).includes(index) : false
   const [ menuOpen , setOpen ] = useState(isOpend)
   const classes = classNames("menu-item submenu-item" , className , {
-    "is-active":context.index === index
+    "is-active":context.index === index,
+    "trans-icon":menuOpen,
+    "is-opened":menuOpen,
+    "is-vertical":context.mode === "vertical"
   })
 
   const handleClick = (e:React.MouseEvent)=>{
@@ -52,7 +57,7 @@ const SubMenu:React.FC<SubMenuProps> = (props)=>{
       }else{
         console.error("warning: Menu has is a child is not a MenuItem");
       }
-    })
+    }) as ReactNode
     return (
       <ul className={subMenuClasses}>
         {childrenEls}
@@ -63,6 +68,7 @@ const SubMenu:React.FC<SubMenuProps> = (props)=>{
     <li key={index} className={classes} {...hoverEvents}>
       <div className="submenu-title" {...clickEvents}>
         {title}
+        <Icon icon="angle-down" className="arrow-icon"></Icon>
       </div>
       {renderChildren()}
     </li>
