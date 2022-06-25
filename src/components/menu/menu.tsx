@@ -5,9 +5,8 @@ import { MenuContext } from './MenuContext';
 import item, { MenuItemProps } from './menuItem';
 import SubMenu, { SubMenuProps } from './SubMenu'
 
-
-type MenuMode = 'horizontal' | 'vertical';
-type onSelect = (selectIndex:number)=>void;
+export type MenuMode = 'horizontal' | 'vertical';
+export type onSelect = (selectIndex:number)=>void;
 export interface MenuProps {
   defaultIndext?:number
   className?:string
@@ -38,6 +37,7 @@ const Menu:MenuRc = (props) => {
     }
   };
   const passedContext:MenuContext = {
+    mode,
     index: currentActive || 0,
     onSelect: handleClick,
   };
