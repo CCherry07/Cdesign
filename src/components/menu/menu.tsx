@@ -37,10 +37,21 @@ const Menu:MenuRc = (props) => {
     index: currentActive || 0,
     onSelect: handleClick,
   };
+  const renderChildren = () =>{
+    return React.Children.map(children,(child , index)=>{
+      const childEl = child as React.FunctionComponentElement<MenuItemProps>
+      const { name } = childEl.type      
+      if (name === "MenuItem") {
+        return React.cloneElement(childEl)
+      }else{
+        console.error("warning: Menu has is a child is not a MenuItem");
+      }
+    })
+  }
   return (
-    <ul className={classes} style={style}>
+    <ul className={classes} style={style} data-testid="test-menu">
       <MenuContext.Provider value={passedContext}>
-        { children }
+        { renderChildren() }
       </MenuContext.Provider>
     </ul>
   );
