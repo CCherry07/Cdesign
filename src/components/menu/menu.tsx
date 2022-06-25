@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import type { FC } from 'react';
 import classNames from 'classnames';
-import item, { MenuItemProps } from './menuItem';
 import { MenuContext } from './MenuContext';
+import item, { MenuItemProps } from './menuItem';
+import SubMenu, { SubMenuProps } from './SubMenu'
+
 
 type MenuMode = 'horizontal' | 'vertical';
 type onSelect = (selectIndex:number)=>void;
@@ -16,7 +18,8 @@ export interface MenuProps {
 }
 
 export interface MenuRc extends FC<MenuProps> {
-  item:React.FC<MenuItemProps>
+  Item:React.FC<MenuItemProps>
+  SubMenu:React.FC<SubMenuProps>
 }
 
 const Menu:MenuRc = (props) => {
@@ -26,6 +29,7 @@ const Menu:MenuRc = (props) => {
   const [currentActive, setActive] = useState(defaultIndext);
   const classes = classNames('viking-menu', className, {
     'menu-vertical': mode === 'vertical',
+    "menu-horizontal":mode !== "vertical"
   });
   const handleClick = (index:number) => {
     setActive(index);
@@ -40,8 +44,8 @@ const Menu:MenuRc = (props) => {
   const renderChildren = () =>{
     return React.Children.map(children,(child , index)=>{
       const childEl = child as React.FunctionComponentElement<MenuItemProps>
-      const { name } = childEl.type      
-      if (name === "MenuItem") {
+      const { name } = childEl.type
+      if (name === "MenuItem" || name === "SubMenu") {
         return React.cloneElement(childEl , { index })
       }else{
         console.error("warning: Menu has is a child is not a MenuItem");
@@ -56,8 +60,8 @@ const Menu:MenuRc = (props) => {
     </ul>
   );
 };
-
-Menu.item = item;
+Menu.SubMenu = SubMenu
+Menu.Item = item;
 Menu.defaultProps = {
   defaultIndext: 0,
   mode: 'horizontal',
