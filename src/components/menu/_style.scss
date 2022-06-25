@@ -30,7 +30,7 @@
       align-items: center;
     }
     .arrow-icon {
-      transition: transform .25s ease-in-out;
+      transition: transform .5s ease-in-out;
       margin-left: 3px;
     }
     &:hover {
@@ -50,7 +50,6 @@
     }
   }
   .viking-submenu {
-    display: none;
     list-style:none;
     padding-left: 0;
     white-space: nowrap;

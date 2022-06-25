@@ -57,11 +57,13 @@ const SubMenu:React.FC<SubMenuProps> = (props)=>{
       }else{
         console.error("warning: Menu has is a child is not a MenuItem");
       }
-    }) as ReactNode
+    })
     return (
-      <ul className={subMenuClasses}>
-        {childrenEls}
-      </ul>
+      <QueueAnim type={['right', 'left']} leaveReverse>
+        { menuOpen? ( <ul className={subMenuClasses} key="cherry">
+                        { childrenEls }
+                     </ul> ): null }
+      </QueueAnim>
     )
   }
   return (

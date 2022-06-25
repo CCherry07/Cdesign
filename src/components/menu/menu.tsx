@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import type { FC } from 'react';
 import classNames from 'classnames';
 import { MenuContext } from './MenuContext';
-import item, { MenuItemProps } from './menuItem';
+import MenuItem, { MenuItemProps } from './menuItem';
 import SubMenu, { SubMenuProps } from './SubMenu'
 
 export type MenuMode = 'horizontal' | 'vertical';
@@ -63,7 +63,7 @@ const Menu:MenuRc = (props) => {
   );
 };
 Menu.SubMenu = SubMenu
-Menu.Item = item;
+Menu.Item = MenuItem;
 Menu.defaultProps = {
   defaultIndext: "0",
   mode: 'horizontal',
