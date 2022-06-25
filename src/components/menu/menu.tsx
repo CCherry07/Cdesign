@@ -6,9 +6,9 @@ import item, { MenuItemProps } from './menuItem';
 import SubMenu, { SubMenuProps } from './SubMenu'
 
 export type MenuMode = 'horizontal' | 'vertical';
-export type onSelect = (selectIndex:number)=>void;
+export type onSelect = (selectIndex:string)=>void;
 export interface MenuProps {
-  defaultIndext?:number
+  defaultIndext?:string
   className?:string
   mode?:MenuMode
   style?:React.CSSProperties
@@ -30,7 +30,7 @@ const Menu:MenuRc = (props) => {
     'menu-vertical': mode === 'vertical',
     "menu-horizontal":mode !== "vertical"
   });
-  const handleClick = (index:number) => {
+  const handleClick = (index:string) => {
     setActive(index);
     if (onSelect) {
       onSelect(index);
@@ -38,7 +38,7 @@ const Menu:MenuRc = (props) => {
   };
   const passedContext:MenuContext = {
     mode,
-    index: currentActive || 0,
+    index: currentActive || "0",
     onSelect: handleClick,
   };
   const renderChildren = () =>{
@@ -46,7 +46,7 @@ const Menu:MenuRc = (props) => {
       const childEl = child as React.FunctionComponentElement<MenuItemProps>
       const { name } = childEl.type
       if (name === "MenuItem" || name === "SubMenu") {
-        return React.cloneElement(childEl , { index })
+        return React.cloneElement(childEl , { index:index.toString() })
       }else{
         console.error("warning: Menu has is a child is not a MenuItem");
       }
@@ -63,7 +63,7 @@ const Menu:MenuRc = (props) => {
 Menu.SubMenu = SubMenu
 Menu.Item = item;
 Menu.defaultProps = {
-  defaultIndext: 0,
+  defaultIndext: "0",
   mode: 'horizontal',
 };
 
