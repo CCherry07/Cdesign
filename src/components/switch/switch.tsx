@@ -1,24 +1,27 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, cloneElement } from 'react';
 
 export type SwitchSize = 'lg' | 'sm';
 
-interface SwitchProps {
-  checked?: boolean
+export interface SwitchProps {
+  defaultChecked?: boolean,
+  labelName?: string,
+  onChange?: () => any
 }
 
-export const Switch: FC<SwitchProps> = ({ checked = false }) => {
-  const [state, setState] = useState(checked);
-  useEffect(() => setState(checked), [checked]);
+export const Switch: FC<SwitchProps> = ({ defaultChecked = false, labelName, onChange }) => {
+  const [state, setState] = useState(defaultChecked);
   return (
-    <label className="switch">
-      <input type="checkbox" checked={state} defaultChecked />
+    <div className='switch' onClick={() => setState(!state)} >
+      <label htmlFor={labelName}></label>
+      <input type="checkbox" name={labelName} checked={state} onChange={onChange} />
       <span className="slider" />
-    </label>
+    </div>
   );
 };
 
 Switch.defaultProps = {
-  checked: true,
+  defaultChecked: true,
+  onChange: () => { }
 };
 
 export default Switch;
