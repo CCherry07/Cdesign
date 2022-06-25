@@ -41,3 +41,4 @@ const SubMenu:React.FC<SubMenuProps> = (props)=>{
   )
 }
 
+export default SubMenu
