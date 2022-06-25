@@ -5,15 +5,15 @@ import { MenuContext } from './MenuContext';
 import item, { MenuItemProps } from './menuItem';
 import SubMenu, { SubMenuProps } from './SubMenu'
 
-
-type MenuMode = 'horizontal' | 'vertical';
-type onSelect = (selectIndex:number)=>void;
+export type MenuMode = 'horizontal' | 'vertical';
+export type onSelect = (selectIndex:string)=>void;
 export interface MenuProps {
-  defaultIndext?:number
+  defaultIndext?:string
   className?:string
   mode?:MenuMode
   style?:React.CSSProperties
   onSelect?:onSelect
+  defaultOpenSubMenus?:string[]
   children?: React.ReactNode
 }
 
@@ -24,21 +24,23 @@ export interface MenuRc extends FC<MenuProps> {
 
 const Menu:MenuRc = (props) => {
   const {
-    defaultIndext, className, mode, style, onSelect, children,
+    defaultIndext, className, mode, style,defaultOpenSubMenus, onSelect, children,
   } = props;
   const [currentActive, setActive] = useState(defaultIndext);
   const classes = classNames('viking-menu', className, {
     'menu-vertical': mode === 'vertical',
     "menu-horizontal":mode !== "vertical"
   });
-  const handleClick = (index:number) => {
+  const handleClick = (index:string) => {
     setActive(index);
     if (onSelect) {
       onSelect(index);
     }
   };
   const passedContext:MenuContext = {
-    index: currentActive || 0,
+    mode,
+    defaultOpenSubMenus,
+    index: currentActive || "0",
     onSelect: handleClick,
   };
   const renderChildren = () =>{
@@ -46,7 +48,7 @@ const Menu:MenuRc = (props) => {
       const childEl = child as React.FunctionComponentElement<MenuItemProps>
       const { name } = childEl.type
       if (name === "MenuItem" || name === "SubMenu") {
-        return React.cloneElement(childEl , { index })
+        return React.cloneElement(childEl , { index:index.toString() })
       }else{
         console.error("warning: Menu has is a child is not a MenuItem");
       }
@@ -63,7 +65,7 @@ const Menu:MenuRc = (props) => {
 Menu.SubMenu = SubMenu
 Menu.Item = item;
 Menu.defaultProps = {
-  defaultIndext: 0,
+  defaultIndext: "0",
   mode: 'horizontal',
 };
 

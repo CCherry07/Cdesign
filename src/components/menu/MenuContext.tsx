@@ -1,8 +1,10 @@
 import { createContext } from 'react';
+import { MenuMode, onSelect } from './menu';
 
-type onSelect = (selectIndex:number)=>void;
 export interface MenuContext {
-  index:number
+  index:string
+  defaultOpenSubMenus?:string[]
+  mode?:MenuMode
   onSelect?: onSelect
 }
-export const MenuContext = createContext<MenuContext>({ index: 0 });
+export const MenuContext = createContext<MenuContext>({ index: "0" });
