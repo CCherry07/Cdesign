@@ -1,5 +1,5 @@
 import classNames from "classnames"
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { MenuContext }  from './MenuContext'
 import { MenuItemProps } from "./menuItem"
 export interface SubMenuProps {
@@ -12,9 +12,14 @@ export interface SubMenuProps {
 const SubMenu:React.FC<SubMenuProps> = (props)=>{
   const {index , title , className , children} = props
   const context = useContext(MenuContext)
+  const [ menuOpen , setOpen ] = useState(false)
   const classes = classNames("menu-item submenu-item" , className , {
     "is-active":context.index === index
   })
+  const handleClick = (e:React.MouseEvent)=>{
+    e.stopPropagation()
+    setOpen(!menuOpen)
+  }
   const renderChildren = () =>{
     const childrenEls = React.Children.map(children,(child , index)=>{
       const childEl = child as React.FunctionComponentElement<MenuItemProps>
