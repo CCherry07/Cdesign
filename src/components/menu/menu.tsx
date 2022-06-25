@@ -13,6 +13,7 @@ export interface MenuProps {
   mode?:MenuMode
   style?:React.CSSProperties
   onSelect?:onSelect
+  defaultOpenSubMenus?:string[]
   children?: React.ReactNode
 }
 
@@ -23,7 +24,7 @@ export interface MenuRc extends FC<MenuProps> {
 
 const Menu:MenuRc = (props) => {
   const {
-    defaultIndext, className, mode, style, onSelect, children,
+    defaultIndext, className, mode, style,defaultOpenSubMenus, onSelect, children,
   } = props;
   const [currentActive, setActive] = useState(defaultIndext);
   const classes = classNames('viking-menu', className, {
@@ -38,6 +39,7 @@ const Menu:MenuRc = (props) => {
   };
   const passedContext:MenuContext = {
     mode,
+    defaultOpenSubMenus,
     index: currentActive || "0",
     onSelect: handleClick,
   };
