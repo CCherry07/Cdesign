@@ -26,6 +26,7 @@ const Menu:MenuRc = (props) => {
   const [currentActive, setActive] = useState(defaultIndext);
   const classes = classNames('viking-menu', className, {
     'menu-vertical': mode === 'vertical',
+    "menu-horizontal":mode !== "vertical"
   });
   const handleClick = (index:number) => {
     setActive(index);
