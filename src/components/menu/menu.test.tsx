@@ -5,7 +5,7 @@ import Menu , { MenuProps } from './menu';
 import React from 'react';
 
 const testProps:MenuProps = {
-  defaultIndext:0,
+  defaultIndext:"0",
   onSelect:(index)=>{
     return index
   },
@@ -13,15 +13,15 @@ const testProps:MenuProps = {
 }
 
 const modeProps:MenuProps = {
-  defaultIndext:0,
+  defaultIndext:"0",
   mode:"vertical",
 }
 
 const TestMenu:React.FC<MenuProps> = (props)=>{
   return <Menu {...props} data-testid="test-menu">
-    <Menu.item index={0}>cherry</Menu.item>
-    <Menu.item index={1} disabled>KD</Menu.item>
-    <Menu.item index={2}>SIS</Menu.item>
+    <Menu.Item>cherry</Menu.Item>
+    <Menu.Item disabled>KD</Menu.Item>
+    <Menu.Item>SIS</Menu.Item>
   </Menu>;
 }
 let wrapper:RenderResult,menuItem:HTMLElement,activeItem:HTMLElement,disabledItem:HTMLElement
