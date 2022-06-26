@@ -59,10 +59,8 @@ const SubMenu:React.FC<SubMenuProps> = (props)=>{
       }
     })
     return (
-      <QueueAnim type={['right', 'left']} leaveReverse>
-        { menuOpen? ( <ul className={subMenuClasses} key="cherry">
-                        { childrenEls }
-                     </ul> ): null }
+      <QueueAnim type={ context.mode === "vertical" ? "top" :["right" , "left"] } leaveReverse>
+        { menuOpen? ( <ul className={subMenuClasses} key="cherry">{ childrenEls } </ul> ): null }
       </QueueAnim>
     )
   }
