@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import { FontAwesomeIcon , FontAwesomeIconProps } from "@fortawesome/react-fontawesome"
-import { fas } from '@fortawesome/free-solid-svg-icons'
 
 export type ThemeProps = 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'danger' | 'light' | 'dark'
 
