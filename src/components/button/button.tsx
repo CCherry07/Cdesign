@@ -15,6 +15,7 @@ interface BaseButtonProps {
   /** 设置 Button 的加载状态 */
   loading?: boolean;
   children: React.ReactNode;
+  /** 设置 Link 链接 */
   href?: string;
 }
 type NativeButtonProps = BaseButtonProps & ButtonHTMLAttributes<HTMLElement>;
