@@ -14,6 +14,7 @@ specifiers:
   '@types/jest': ^28.1.2
   '@types/react': ^18.0.0
   '@types/react-dom': ^18.0.0
+  '@types/react-transition-group': ^4.4.5
   '@types/testing-library__jest-dom': ^5.14.5
   '@typescript-eslint/eslint-plugin': ^5.13.0
   '@typescript-eslint/parser': ^5.0.0
@@ -49,6 +50,7 @@ dependencies:
   '@testing-library/react-hooks': 8.0.1_twyhzqqpkwvvgrmyeapdo6i4my
   '@testing-library/user-event': 14.2.1
   '@types/classnames': 2.3.1
+  '@types/react-transition-group': 4.4.5
   '@types/testing-library__jest-dom': 5.14.5
   classnames: 2.3.1
   eslint-config-prettier: 8.5.0_eslint@8.18.0
@@ -1587,6 +1589,12 @@ packages:
     resolution: {integrity: sha512-OWPWTUrY/NIrjsAPkAk1wW9LZeIjSvkXRhclsFO8CZcZGCOg2G0YZy4ft+rOyYxy8B7ui5iZzi9OkDebZ7/QSA==}
     dependencies:
       '@types/react': 18.0.14
+
+  /@types/react-transition-group/4.4.5:
+    resolution: {integrity: sha512-juKD/eiSM3/xZYzjuzH6ZwpP+/lejltmiS3QEzV/vmb/Q8+HfDmxu+Baga8UEMGBqV88Nbg4l2hY/K2DkyaLLA==}
+    dependencies:
+      '@types/react': 18.0.14
+    dev: false
 
   /@types/react/18.0.14:
     resolution: {integrity: sha512-x4gGuASSiWmo0xjDLpm5mPb52syZHJx02VKbqUKdLmKtAwIh63XClGsiTI1K6DO5q7ox4xAsQrU+Gl3+gGXF9Q==}
