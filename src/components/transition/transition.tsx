@@ -6,15 +6,16 @@ type QueueTransitionName = "zoom-in-top"|"zoom-in-left"|"zoom-in-bottom"|"zoom-i
 type TransitionProps = {
   queueAnim?:QueueTransitionName
   children?:React.ReactNode
+  wrapper: boolean
 } & CSSTransitionProps
 
 const Transition:React.FC<TransitionProps> = (props)=>{
-  const { children , classNames ,queueAnim , ...restProps} = props
+  const { children , classNames , wrapper , queueAnim , ...restProps} = props
   return (
     <CSSTransition 
       classNames={classNames || queueAnim}
       {...restProps}>
-        { children }
+        { wrapper ? <div>{children}</div> : children}
     </CSSTransition>
   )
 }
