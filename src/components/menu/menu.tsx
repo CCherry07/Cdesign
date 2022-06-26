@@ -55,7 +55,7 @@ const Menu:MenuRc = (props) => {
     })
   }
   return (
-    <ul className={classes} style={style} data-testid="test-menu">
+    <ul className={classes} style={style}>
       <MenuContext.Provider value={passedContext}>
         { renderChildren() }
       </MenuContext.Provider>
