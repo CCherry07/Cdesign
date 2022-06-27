@@ -45,4 +45,20 @@
     & input:checked+.slider:before {
         transform: translateX(26px);
     }
+
+    &.switch-sm {
+        width: 45px;
+        height: 25px;
+
+        .slider:before {
+            height: 20px;
+            width: 20px;
+            left: 2px;
+            bottom: 2.5px;
+        }
+
+        & input:checked+.slider:before {
+            transform: translateX(20px);
+        }
+    }
 }
