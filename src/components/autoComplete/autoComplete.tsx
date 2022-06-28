@@ -19,7 +19,7 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
     const value = e.target.value.trim()
     setInputValue(value)
     if (value) {
-      const filterOptions = filterOption?.(value,options)||[]
+      const filterOptions = filterOption?.(value,dataSource||[])||[]
       console.log(filterOptions);
       setOptions(filterOptions)
     }else{
