@@ -1,21 +1,24 @@
 import { ChangeEvent, useState } from 'react'
 import Input,{ InputProps } from '../input/input'
 
+
+export type DataSourceItemType<T = {}> = T & DataSourceItemObject
 export interface DataSourceItemObject {
   value: string;
   text: string;
 }
+
 export interface AutoCompleteProps extends Omit<InputProps , "onSelect"> {
-  dataSource?:DataSourceItemObject[],
-  filterOption?:(inputValue: string,options: DataSourceItemObject[])=>DataSourceItemObject[]
-  onSelect?:(options:DataSourceItemObject)=>void
-  renderOption?:(options:DataSourceItemObject)=>React.ReactNode
+  dataSource?:DataSourceItemType[],
+  filterOption?:(inputValue: string,options: DataSourceItemType[])=>DataSourceItemType[]
+  onSelect?:(options:DataSourceItemType)=>void
+  renderOption?:(options:DataSourceItemType)=>React.ReactNode
 }
 
 export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
   const { filterOption , renderOption , onSelect ,value , dataSource = [], ...restprops  } = props
   const [inputValue,setInputValue] = useState(value)
-  const [options , setOptions] = useState<DataSourceItemObject[]>([])
+  const [options , setOptions] = useState<DataSourceItemType[]>([])
   const handleChange = (e:ChangeEvent<HTMLInputElement>)=>{
     const value = e.target.value.trim()
     setInputValue(value)
@@ -27,11 +30,11 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
     }
   }
 
-  const renderChild = (option:DataSourceItemObject) =>{
+  const renderChild = (option:DataSourceItemType) =>{
     return renderOption ? renderOption(option) : option.text
   }
 
-  const handleSelect = (option:DataSourceItemObject) =>{
+  const handleSelect = (option:DataSourceItemType) =>{
     setInputValue(option.value)
     setOptions([])
     if (!onSelect)return
