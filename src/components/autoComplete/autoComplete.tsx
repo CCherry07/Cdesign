@@ -26,11 +26,17 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
     }
   }
 
+  const handleSelect = (option:DataSourceItemObject) =>{
+    setInputValue(option.value)
+    setOptions([])
+    if (!onSelect)return
+    onSelect(option)
+  }
   const generateDrodown = () =>{
     return (
       <ul>
         {options.map((item , idx)=>{
-          return <li> { item.text } </li>
+          return (<li key={item.value} onClick={()=>handleSelect(item)}> { item.text } </li>)
         })}
       </ul>
     )
