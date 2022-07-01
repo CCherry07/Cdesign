@@ -19,13 +19,16 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
   const { filterOption , renderOption , onSelect ,value , dataSource = [], ...restprops  } = props
   const [inputValue,setInputValue] = useState(value)
   const [options , setOptions] = useState<DataSourceItemType[]>([])
+  const [loading , setloading] = useState(false)
   const handleChange = (e:ChangeEvent<HTMLInputElement>)=>{
     const value = e.target.value.trim()
     setInputValue(value)
     if (value) {
+      setloading(true)
       const filterOptions = filterOption?.(value,dataSource)||[]
       if (filterOptions instanceof Promise) {
         filterOptions.then((result: SetStateAction<DataSourceItemObject[]>)=>{
+          setloading(false)
           setOptions(result)
         }).catch(error=>{
           throw error
