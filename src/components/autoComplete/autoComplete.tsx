@@ -12,19 +12,28 @@ export interface AutoCompleteProps extends Omit<InputProps , "onSelect"> {
 }
 
 export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
-  const { filterOption , onSelect ,value , dataSource, ...restprops  } = props
+  const { filterOption , onSelect ,value , dataSource = [], ...restprops  } = props
   const [inputValue,setInputValue] = useState(value)
-  const [options , setOptions] = useState(props.dataSource||[])
+  const [options , setOptions] = useState<DataSourceItemObject[]>([])
   const handleChange = (e:ChangeEvent<HTMLInputElement>)=>{
     const value = e.target.value.trim()
     setInputValue(value)
     if (value) {
-      const filterOptions = filterOption?.(value,dataSource||[])||[]
-      console.log(filterOptions);
+      const filterOptions = filterOption?.(value,dataSource)||[]
       setOptions(filterOptions)
     }else{
-      setOptions(dataSource||[])
+      setOptions([])
     }
+  }
+
+  const generateDrodown = () =>{
+    return (
+      <ul>
+        {options.map((item , idx)=>{
+          return <li> { item.text } </li>
+        })}
+      </ul>
+    )
   }
   return (
     <div className='viking-auto-complete'>
@@ -32,6 +41,7 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
       value={inputValue}
       onChange={handleChange} 
       { ...restprops }/>
+      { options && generateDrodown() }
     </div>
   )
 }
