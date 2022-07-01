@@ -1,20 +1,24 @@
 import { ChangeEvent, useState } from 'react'
 import Input,{ InputProps } from '../input/input'
 
+
+export type DataSourceItemType<T = {}> = T & DataSourceItemObject
 export interface DataSourceItemObject {
   value: string;
   text: string;
 }
+
 export interface AutoCompleteProps extends Omit<InputProps , "onSelect"> {
-  dataSource?:DataSourceItemObject[],
-  filterOption?:(inputValue: string,options: DataSourceItemObject[])=>DataSourceItemObject[]
-  onSelect?:(options:DataSourceItemObject)=>void
+  dataSource?:DataSourceItemType[],
+  filterOption?:(inputValue: string,options: DataSourceItemType[])=>DataSourceItemType[]
+  onSelect?:(options:DataSourceItemType)=>void
+  renderOption?:(options:DataSourceItemType)=>React.ReactNode
 }
 
 export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
-  const { filterOption , onSelect ,value , dataSource = [], ...restprops  } = props
+  const { filterOption , renderOption , onSelect ,value , dataSource = [], ...restprops  } = props
   const [inputValue,setInputValue] = useState(value)
-  const [options , setOptions] = useState<DataSourceItemObject[]>([])
+  const [options , setOptions] = useState<DataSourceItemType[]>([])
   const handleChange = (e:ChangeEvent<HTMLInputElement>)=>{
     const value = e.target.value.trim()
     setInputValue(value)
@@ -26,7 +30,11 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
     }
   }
 
-  const handleSelect = (option:DataSourceItemObject) =>{
+  const renderChild = (option:DataSourceItemType) =>{
+    return renderOption ? renderOption(option) : option.text
+  }
+
+  const handleSelect = (option:DataSourceItemType) =>{
     setInputValue(option.value)
     setOptions([])
     if (!onSelect)return
@@ -36,7 +44,7 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
     return (
       <ul>
         {options.map((item , idx)=>{
-          return (<li key={item.value} onClick={()=>handleSelect(item)}> { item.text } </li>)
+          return (<li key={item.value} onClick={()=>handleSelect(item)}> { renderChild(item) } </li>)
         })}
       </ul>
     )
