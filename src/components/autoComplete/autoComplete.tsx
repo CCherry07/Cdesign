@@ -1,16 +1,16 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, SetStateAction, useState } from 'react'
 import Input,{ InputProps } from '../input/input'
-
+import Icon from '../icon/icon'
 
 export type DataSourceItemType<T = {}> = T & DataSourceItemObject
 export interface DataSourceItemObject {
   value: string;
   text: string;
 }
-
+export type filterOptionType = (inputValue: string,options: DataSourceItemType[])=>(DataSourceItemType[] | Promise<DataSourceItemType[]>)
 export interface AutoCompleteProps extends Omit<InputProps , "onSelect"> {
-  dataSource?:DataSourceItemType[],
-  filterOption?:(inputValue: string,options: DataSourceItemType[])=>DataSourceItemType[]
+  dataSource?:DataSourceItemType[],  
+  filterOption?:filterOptionType
   onSelect?:(options:DataSourceItemType)=>void
   renderOption?:(options:DataSourceItemType)=>React.ReactNode
 }
@@ -24,7 +24,15 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
     setInputValue(value)
     if (value) {
       const filterOptions = filterOption?.(value,dataSource)||[]
-      setOptions(filterOptions)
+      if (filterOptions instanceof Promise) {
+        filterOptions.then((result: SetStateAction<DataSourceItemObject[]>)=>{
+          setOptions(result)
+        }).catch(error=>{
+          throw error
+        })
+      }else{
+        setOptions(filterOptions)
+      }
     }else{
       setOptions([])
     }
@@ -55,6 +63,8 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
       value={inputValue}
       onChange={handleChange} 
       { ...restprops }/>
+
+      { loading && <Icon icon={"spinner"} spin></Icon> }
       { options && generateDrodown() }
     </div>
   )
