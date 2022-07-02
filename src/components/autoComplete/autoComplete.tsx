@@ -88,6 +88,11 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
     retrySearch.current = false
   }
 
+  const hoverEvents ={
+    onMouseEnter:()=>setActiveIndex(-1),
+    onMouseLeave:()=>setActiveIndex(0)
+  }
+
   const generateDrodown = () =>{
     return (
       <ul>
@@ -95,7 +100,7 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
           const activeClass = classNames("suggestion-item",{
             "item-highlighted":idx === activeIndex
           })
-          return (<li key={item.value} className={activeClass} onClick={()=>handleSelect(item)}> { renderChild(item) } </li>)
+          return (<li key={item.value} {...hoverEvents} className={activeClass} onClick={()=>handleSelect(item)}> { renderChild(item) } </li>)
         })}
       </ul>
     )
