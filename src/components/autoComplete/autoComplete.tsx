@@ -1,6 +1,7 @@
-import { ChangeEvent, SetStateAction, useState } from 'react'
+import { ChangeEvent, SetStateAction, useState , useEffect } from 'react'
 import Input,{ InputProps } from '../input/input'
-import Icon from '../icon/icon'
+import Icon from '../icon'
+import { isVoid } from '../../utils';
 
 export type DataSourceItemType<T = {}> = T & DataSourceItemObject
 export interface DataSourceItemObject {
@@ -17,28 +18,30 @@ export interface AutoCompleteProps extends Omit<InputProps , "onSelect"> {
 
 export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
   const { filterOption , renderOption , onSelect ,value , dataSource = [], ...restprops  } = props
-  const [inputValue,setInputValue] = useState(value)
+  const [inputValue,setInputValue] = useState(value as string)
   const [options , setOptions] = useState<DataSourceItemType[]>([])
   const [loading , setloading] = useState(false)
-  const handleChange = (e:ChangeEvent<HTMLInputElement>)=>{
-    const value = e.target.value.trim()
-    setInputValue(value)
-    if (value) {
+ 
+  useEffect(()=>{
+    if (isVoid(inputValue)) return setOptions([])
       setloading(true)
-      const filterOptions = filterOption?.(value,dataSource)||[]
+      const filterOptions = filterOption?.(inputValue,dataSource)||[]
       if (filterOptions instanceof Promise) {
         filterOptions.then((result: SetStateAction<DataSourceItemObject[]>)=>{
           setloading(false)
           setOptions(result)
         }).catch(error=>{
+          setloading(false)
           throw error
         })
       }else{
         setOptions(filterOptions)
       }
-    }else{
-      setOptions([])
-    }
+  },[inputValue])
+  
+  const handleChange = (e:ChangeEvent<HTMLInputElement>)=>{
+    const value = e.target.value.trim()
+    setInputValue(value)
   }
 
   const renderChild = (option:DataSourceItemType) =>{
