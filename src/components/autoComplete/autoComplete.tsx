@@ -11,7 +11,7 @@ export interface DataSourceItemObject {
   value: string;
   text: string;
 }
-export type filterOptionType = <T extends DataSourceItemType>(inputValue: string,options: T[])=>(T[] | Promise<T[]>)
+export type filterOptionType = (inputValue: string,options: DataSourceItemType[])=>(DataSourceItemType[] | Promise<DataSourceItemType[]>)
 export interface AutoCompleteProps extends Omit<InputProps , "onSelect"> {
   dataSource?:DataSourceItemType[],  
   filterOption?:filterOptionType
