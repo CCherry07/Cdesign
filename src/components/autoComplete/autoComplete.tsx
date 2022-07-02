@@ -2,13 +2,13 @@ import { ChangeEvent, SetStateAction, useState , useEffect } from 'react'
 import Input,{ InputProps } from '../input/input'
 import Icon from '../icon'
 import { isVoid } from '../../utils';
-
+import { useDebounce } from '../../chooks';
 export type DataSourceItemType<T = {}> = T & DataSourceItemObject
 export interface DataSourceItemObject {
   value: string;
   text: string;
 }
-export type filterOptionType = (inputValue: string,options: DataSourceItemType[])=>(DataSourceItemType[] | Promise<DataSourceItemType[]>)
+export type filterOptionType = <T extends DataSourceItemType>(inputValue: string,options: T[])=>(T[] | Promise<T[]>)
 export interface AutoCompleteProps extends Omit<InputProps , "onSelect"> {
   dataSource?:DataSourceItemType[],  
   filterOption?:filterOptionType
@@ -21,11 +21,11 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
   const [inputValue,setInputValue] = useState(value as string)
   const [options , setOptions] = useState<DataSourceItemType[]>([])
   const [loading , setloading] = useState(false)
- 
+ const debounceValue = useDebounce(inputValue)
   useEffect(()=>{
-    if (isVoid(inputValue)) return setOptions([])
+    if (isVoid(debounceValue)) return setOptions([])
       setloading(true)
-      const filterOptions = filterOption?.(inputValue,dataSource)||[]
+      const filterOptions = filterOption?.(debounceValue,dataSource)||[]
       if (filterOptions instanceof Promise) {
         filterOptions.then((result: SetStateAction<DataSourceItemObject[]>)=>{
           setloading(false)
@@ -37,7 +37,7 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
       }else{
         setOptions(filterOptions)
       }
-  },[inputValue])
+  },[debounceValue])
   
   const handleChange = (e:ChangeEvent<HTMLInputElement>)=>{
     const value = e.target.value.trim()
