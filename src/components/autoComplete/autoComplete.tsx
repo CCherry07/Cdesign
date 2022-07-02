@@ -4,6 +4,7 @@ import Icon from '../icon'
 import { isVoid } from '../../utils';
 import { useDebounce } from '../../chooks';
 import classNames from 'classnames';
+import { useRef } from 'react';
 export type DataSourceItemType<T = {}> = T & DataSourceItemObject
 export interface DataSourceItemObject {
   value: string;
@@ -23,11 +24,11 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
   const [options , setOptions] = useState<DataSourceItemType[]>([])
   const [loading , setloading] = useState(false)
   const [activeIndex , setActiveIndex] = useState(-1)
-
+  const retrySearch = useRef(false)
   const debounceValue = useDebounce(inputValue)
 
   useEffect(()=>{
-    if (isVoid(debounceValue)) return setOptions([])
+    if (isVoid(debounceValue) || !retrySearch.current) return setOptions([])
       setloading(true)
       const filterOptions = filterOption?.(debounceValue,dataSource)||[]
       if (filterOptions instanceof Promise) {
@@ -72,6 +73,7 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
   const handleChange = (e:ChangeEvent<HTMLInputElement>)=>{
     const value = e.target.value.trim()
     setInputValue(value)
+    retrySearch.current = true
   }
 
   const renderChild = (option:DataSourceItemType) =>{
@@ -83,6 +85,7 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
     setOptions([])
     if (!onSelect)return
     onSelect(option)
+    retrySearch.current = false
   }
 
   const generateDrodown = () =>{
