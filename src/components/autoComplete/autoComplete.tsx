@@ -1,8 +1,11 @@
-import { ChangeEvent, SetStateAction, useState , useEffect } from 'react'
+import {useState , useEffect,useRef } from 'react'
+import type { ChangeEvent , SetStateAction } from 'react'
+import classNames from 'classnames';
 import Input,{ InputProps } from '../input/input'
 import Icon from '../icon'
+import { useClickTargetOutsite, useDebounce } from '../../chooks';
 import { isVoid } from '../../utils';
-import { useDebounce } from '../../chooks';
+
 export type DataSourceItemType<T = {}> = T & DataSourceItemObject
 export interface DataSourceItemObject {
   value: string;
@@ -21,13 +24,22 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
   const [inputValue,setInputValue] = useState(value as string)
   const [options , setOptions] = useState<DataSourceItemType[]>([])
   const [loading , setloading] = useState(false)
- const debounceValue = useDebounce(inputValue)
+  const [activeIndex , setActiveIndex] = useState(-1)
+  const componentRef = useRef<HTMLDivElement>(null)
+  const retrySearch = useRef(false)
+
+  const debounceValue = useDebounce(inputValue)
+  useClickTargetOutsite(componentRef,()=>{
+    setOptions([])
+  })
+  
   useEffect(()=>{
-    if (isVoid(debounceValue)) return setOptions([])
+    if (isVoid(debounceValue) || !retrySearch.current) return setOptions([])
       setloading(true)
       const filterOptions = filterOption?.(debounceValue,dataSource)||[]
       if (filterOptions instanceof Promise) {
         filterOptions.then((result: SetStateAction<DataSourceItemObject[]>)=>{
+          setActiveIndex(0)
           setloading(false)
           setOptions(result)
         }).catch(error=>{
@@ -38,10 +50,36 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
         setOptions(filterOptions)
       }
   },[debounceValue])
-  
+
+  const handleKeyAction = (activeIdx:number) =>{
+    if (activeIdx < 0) activeIdx = options.length -1 
+    if (activeIdx >= options.length) activeIdx = 0
+    setActiveIndex(activeIdx) 
+  }
+
+  const handleKeyDown = (e:React.KeyboardEvent<HTMLInputElement>)=>{
+    switch (e.key) {      
+      case "Escape":
+        setOptions([])
+        break
+      case "ArrowUp":
+        handleKeyAction(activeIndex-1)
+        break;
+      case "ArrowDown":
+        handleKeyAction(activeIndex+1)
+        break
+      case "Enter":
+        options?.[activeIndex]&&handleSelect(options[activeIndex])
+        break
+      default:
+        break;
+    }
+  }
+
   const handleChange = (e:ChangeEvent<HTMLInputElement>)=>{
     const value = e.target.value.trim()
     setInputValue(value)
+    retrySearch.current = true
   }
 
   const renderChild = (option:DataSourceItemType) =>{
@@ -53,28 +91,37 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
     setOptions([])
     if (!onSelect)return
     onSelect(option)
+    retrySearch.current = false
   }
+
+  const hoverEvents ={
+    onMouseEnter:()=>setActiveIndex(-1),
+    onMouseLeave:()=>setActiveIndex(0)
+  }
+
   const generateDrodown = () =>{
     return (
       <ul>
         {options.map((item , idx)=>{
-          return (<li key={item.value} onClick={()=>handleSelect(item)}> { renderChild(item) } </li>)
+          const activeClass = classNames("suggestion-item",{
+            "item-highlighted":idx === activeIndex
+          })
+          return (<li key={item.value} {...hoverEvents} className={activeClass} onClick={()=>handleSelect(item)}> { renderChild(item) } </li>)
         })}
       </ul>
     )
   }
   return (
-    <div className='viking-auto-complete'>
+    <div className='viking-auto-complete' ref={componentRef}>
       <Input 
       value={inputValue}
-      onChange={handleChange} 
+      onChange={handleChange}
+      onKeyDown={handleKeyDown} 
       { ...restprops }/>
-
       { loading && <Icon icon={"spinner"} spin></Icon> }
       { options && generateDrodown() }
     </div>
   )
 }
-
 
 export default AutoComplete

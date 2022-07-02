@@ -1,3 +1,4 @@
 import { useDebounce } from './useDebounce'
+import { useClickTargetOutsite } from './useClickTargetOutSide'
 
-export {useDebounce};
+export {useDebounce,useClickTargetOutsite};
