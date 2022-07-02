@@ -1,10 +1,11 @@
-import { ChangeEvent, SetStateAction, useState , useEffect } from 'react'
+import {useState , useEffect,useRef } from 'react'
+import type { ChangeEvent , SetStateAction } from 'react'
+import classNames from 'classnames';
 import Input,{ InputProps } from '../input/input'
 import Icon from '../icon'
+import { useClickTargetOutsite, useDebounce } from '../../chooks';
 import { isVoid } from '../../utils';
-import { useDebounce } from '../../chooks';
-import classNames from 'classnames';
-import { useRef } from 'react';
+
 export type DataSourceItemType<T = {}> = T & DataSourceItemObject
 export interface DataSourceItemObject {
   value: string;
@@ -24,9 +25,14 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
   const [options , setOptions] = useState<DataSourceItemType[]>([])
   const [loading , setloading] = useState(false)
   const [activeIndex , setActiveIndex] = useState(-1)
+  const componentRef = useRef<HTMLDivElement>(null)
   const retrySearch = useRef(false)
-  const debounceValue = useDebounce(inputValue)
 
+  const debounceValue = useDebounce(inputValue)
+  useClickTargetOutsite(componentRef,()=>{
+    setOptions([])
+  })
+  
   useEffect(()=>{
     if (isVoid(debounceValue) || !retrySearch.current) return setOptions([])
       setloading(true)
@@ -106,7 +112,7 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
     )
   }
   return (
-    <div className='viking-auto-complete'>
+    <div className='viking-auto-complete' ref={componentRef}>
       <Input 
       value={inputValue}
       onChange={handleChange}
