@@ -3,7 +3,7 @@ import type { ChangeEvent , SetStateAction } from 'react'
 import classNames from 'classnames';
 import Input,{ InputProps } from '../input/input'
 import Icon from '../icon'
-import { useClickTargetOutsite, useDebounce } from '../../chooks';
+import { useClickTargetOutsite, useDebounce } from '../../hooks';
 import { isVoid } from '../../utils';
 
 export type DataSourceItemType<T = {}> = T & DataSourceItemObject
@@ -101,12 +101,12 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
 
   const generateDrodown = () =>{
     return (
-      <ul>
+      <ul className='viking-suggestion-list'>
         {options.map((item , idx)=>{
-          const activeClass = classNames("suggestion-item",{
+          const suggestionItemClass = classNames("suggestion-item",{
             "item-highlighted":idx === activeIndex
           })
-          return (<li key={item.value} {...hoverEvents} className={activeClass} onClick={()=>handleSelect(item)}> { renderChild(item) } </li>)
+          return (<li key={item.value} {...hoverEvents} className={suggestionItemClass} onClick={()=>handleSelect(item)}> { renderChild(item) } </li>)
         })}
       </ul>
     )
