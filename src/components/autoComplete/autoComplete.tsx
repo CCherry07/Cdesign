@@ -20,7 +20,10 @@ export interface AutoCompleteProps extends Omit<InputProps , "onSelect"> {
 }
 
 export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
-  const { filterOption , renderOption , onSelect ,value , dataSource = [], ...restprops  } = props
+  const { filterOption , renderOption , onSelect,
+          className , style  ,value ,  dataSource = [],
+          ...restprops } = props
+
   const [inputValue,setInputValue] = useState(value as string)
   const [options , setOptions] = useState<DataSourceItemType[]>([])
   const [loading , setloading] = useState(false)
@@ -33,6 +36,8 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
     setOptions([])
   })
   
+  const classes = classNames('viking-auto-complete',className)
+
   useEffect(()=>{
     if (isVoid(debounceValue) || !retrySearch.current) return setOptions([])
       setloading(true)
@@ -102,9 +107,9 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
   const generateDrodown = () =>{
     return (
       <ul className='viking-suggestion-list'>
-        <div className='suggestions-loading-icon'>
-        { loading && <Icon icon={"spinner"} spin></Icon> }
-        </div>
+        { loading && (<div className='suggestions-loading-icon'>
+            <Icon icon={"spinner"} spin/>
+        </div>) }
         {options.map((item , idx)=>{
           const suggestionItemClass = classNames("suggestion-item",{
             "item-highlighted":idx === activeIndex
@@ -115,13 +120,13 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
     )
   }
   return (
-    <div className='viking-auto-complete' ref={componentRef}>
-      <Input 
-      value={inputValue}
-      onChange={handleChange}
-      onKeyDown={handleKeyDown} 
-      { ...restprops }/>
-      { options && generateDrodown() }
+    <div className={classes} ref={componentRef} style={style}>
+        <Input 
+        value={inputValue}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
+        {...restprops} />
+        { options && generateDrodown() }
     </div>
   )
 }
