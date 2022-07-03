@@ -11,6 +11,7 @@ export interface DataSourceItemObject {
   value: string;
   text: string;
 }
+
 export type filterOptionType = (inputValue: string,options: DataSourceItemType[])=>(DataSourceItemType[] | Promise<DataSourceItemType[]>)
 export interface AutoCompleteProps extends Omit<InputProps , "onSelect"> {
   dataSource?:DataSourceItemType[],  
@@ -23,7 +24,7 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
   const { filterOption , renderOption , onSelect,
           className , style  ,value ,  dataSource = [],
           ...restprops } = props
-
+  
   const [inputValue,setInputValue] = useState(value as string)
   const [options , setOptions] = useState<DataSourceItemType[]>([])
   const [loading , setloading] = useState(false)
@@ -104,6 +105,7 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
     onMouseLeave:()=>setActiveIndex(0)
   }
 
+
   const generateDrodown = () =>{
     return (
       <ul className='viking-suggestion-list'>
@@ -112,9 +114,10 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
         </div>) }
         {options.map((item , idx)=>{
           const suggestionItemClass = classNames("suggestion-item",{
-            "item-highlighted":idx === activeIndex
+            "item-active":className?.includes("item-active")&&idx === activeIndex,
+            "default-item-active":!className?.includes("item-active")&&idx === activeIndex
           })
-          return (<li key={item.value} {...hoverEvents} className={suggestionItemClass} onClick={()=>handleSelect(item)}> { renderChild(item) } </li>)
+          return (<li className={ suggestionItemClass } key={item.value} {...hoverEvents} onClick={()=>handleSelect(item)}> { renderChild(item) } </li>)
         })}
       </ul>
     )

@@ -19,11 +19,15 @@
     justify-content: center;
     min-height: 75px;
   }
+  .default-item-active{
+    background-color: rgba($color: $primary, $alpha: .8);
+  }
   .suggestion-item {
     padding: $menu-item-padding-y $menu-item-padding-x;
     cursor: pointer;
     transition: $menu-transition;
     color: $body-color;
+    border-bottom: 1px solid $menu-border-color;
     &.is-active {
       background: $menu-item-active-color !important;
       color: $white !important;
