@@ -102,6 +102,9 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
   const generateDrodown = () =>{
     return (
       <ul className='viking-suggestion-list'>
+        <div className='suggestions-loading-icon'>
+        { loading && <Icon icon={"spinner"} spin></Icon> }
+        </div>
         {options.map((item , idx)=>{
           const suggestionItemClass = classNames("suggestion-item",{
             "item-highlighted":idx === activeIndex
@@ -118,7 +121,6 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
       onChange={handleChange}
       onKeyDown={handleKeyDown} 
       { ...restprops }/>
-      { loading && <Icon icon={"spinner"} spin></Icon> }
       { options && generateDrodown() }
     </div>
   )
