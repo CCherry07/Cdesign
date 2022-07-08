@@ -2,15 +2,6 @@ import React, {useRef , useState} from 'react'
 import axios from 'axios'
 import Button from '../button/button'
 
-
-export interface UploadProps{
-  action:string
-  onProgress?:(percentage:number,file:File)=>void
-  onSuccess?:(data:any,file:File)=>void
-  onError?:(err:any,file:File)=>void
-  beforeUpload?:(file:File)=>boolean | Promise<File>
-  onChange?:(file:File)=>void
-}
 export type UploadFileStatus = "ready" | "uploading"|"success"|"error"
 export interface UploadFile{
   uid:string
@@ -22,9 +13,27 @@ export interface UploadFile{
   response?:any
   error?:any
 }
+export interface UploadProps{
+  action:string
+  defaultFileList:UploadFile[]
+  onProgress?:(percentage:number,file:File)=>void
+  onSuccess?:(data:any,file:File)=>void
+  onError?:(err:any,file:File)=>void
+  beforeUpload?:(file:File)=>boolean | Promise<File>
+  onChange?:(file:File)=>void
+  onRemove?:(file:UploadFile)=>void
+}
+
 
 export const Upload:React.FC<UploadProps>=(props)=>{
-  const { action ,beforeUpload, onChange ,  onError, onProgress, onSuccess }=props
+  const { 
+    action ,
+    defaultFileList,
+    beforeUpload, 
+    onChange ,  onError, 
+    onProgress, onSuccess,
+    onRemove
+  } = props
   const [fileList , setFileList ] = useState<UploadFile[]>([])
   const fileInputRef = useRef<HTMLInputElement>(null)
   
@@ -42,7 +51,6 @@ export const Upload:React.FC<UploadProps>=(props)=>{
       fileInputRef.current.click()
     }
   }
-  console.log(fileList);
   
   const handlefileInputChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
     const files = e.target.files
