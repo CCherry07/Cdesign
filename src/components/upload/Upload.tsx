@@ -102,7 +102,7 @@ export const Upload:React.FC<UploadProps>=(props)=>{
         "content-type":"multipart/form-data"
       },
       onUploadProgress:(e)=>{
-        let percentage = Math.round(e.loaded * 100)/e.total || 0
+        let percentage = Math.floor(Math.round(e.loaded * 100)/e.total || 0)
         if (percentage<100) {
           uploadFileList(_file,{percent:percentage , status:"uploading"})
           if (onProgress) {
