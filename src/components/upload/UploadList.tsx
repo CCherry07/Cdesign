@@ -1,4 +1,5 @@
 import Icon from '../icon'
+import Progress from '../progress'
 import type { UploadFile } from './Upload'
 
 export interface UploadListProps {
@@ -24,6 +25,7 @@ export const UploadList:React.FC<UploadListProps> = (props)=>{
               <span className='file-actions'>
                 <Icon icon={"times"} onClick={()=>onRemove(item)}/>
               </span>
+              { item.status === "uploading" && <Progress percent={item.percent || 0}/> }
             </span>
           </li>
         )
