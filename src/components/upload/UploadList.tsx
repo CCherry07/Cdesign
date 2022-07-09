@@ -3,7 +3,7 @@ import type { UploadFile } from './Upload'
 
 export interface UploadListProps {
   fileList:UploadFile[]
-  onRemove?:(file:UploadFile)=>void
+  onRemove:(file:UploadFile)=>void
 }
 
 export const UploadList:React.FC<UploadListProps> = (props)=>{
@@ -22,7 +22,7 @@ export const UploadList:React.FC<UploadListProps> = (props)=>{
                 {item.status === "error" && <Icon icon="times-circle" theme='danger'/>}
               </span>
               <span className='file-actions'>
-                <Icon icon={"times"} onClick={()=>onRemove?.(item)}/>
+                <Icon icon={"times"} onClick={()=>onRemove(item)}/>
               </span>
             </span>
           </li>

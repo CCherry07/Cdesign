@@ -51,6 +51,13 @@ export const Upload:React.FC<UploadProps>=(props)=>{
       fileInputRef.current.click()
     }
   }
+
+  const handleRemove = (file:UploadFile)=>{
+    setFileList((fileList)=>{
+      return fileList.filter(_file=>_file.uid !== file.uid)
+    })
+    onRemove?.(file)
+  }
   
   const handlefileInputChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
     const files = e.target.files
@@ -127,7 +134,7 @@ export const Upload:React.FC<UploadProps>=(props)=>{
         onChange={handlefileInputChange}
         ref={fileInputRef}
       />
-      <UploadList fileList={fileList}></UploadList>
+      <UploadList fileList={fileList} onRemove={handleRemove}></UploadList>
     </div>
   )
 }
