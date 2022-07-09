@@ -16,6 +16,14 @@ export const UploadList:React.FC<UploadListProps> = (props)=>{
             <span className={`file-name file-name-${item.status}`}>
               <Icon icon={"file-alt"} theme="secondary"/>
               { item.name }
+              <span className='file-status'>
+                {item.status === "uploading" && <Icon icon="spinner" spin theme='primary'/>}
+                {item.status === "success" && <Icon icon="check-circle" theme='success'/>}
+                {item.status === "error" && <Icon icon="times-circle" theme='danger'/>}
+              </span>
+              <span className='file-actions'>
+                <Icon icon={"times"} onClick={()=>onRemove?.(item)}/>
+              </span>
             </span>
           </li>
         )
