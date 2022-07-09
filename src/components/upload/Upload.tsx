@@ -1,7 +1,7 @@
 import React, {useRef , useState} from 'react'
 import axios from 'axios'
 import Button from '../button/button'
-
+import UploadList from './UploadList'
 export type UploadFileStatus = "ready" | "uploading"|"success"|"error"
 export interface UploadFile{
   uid:string
@@ -34,7 +34,7 @@ export const Upload:React.FC<UploadProps>=(props)=>{
     onProgress, onSuccess,
     onRemove
   } = props
-  const [fileList , setFileList ] = useState<UploadFile[]>([])
+  const [fileList , setFileList ] = useState<UploadFile[]>(defaultFileList||[])
   const fileInputRef = useRef<HTMLInputElement>(null)
   
   const uploadFileList = (uploadFile:UploadFile , uploadObj:Partial<UploadFile>)=>{
@@ -127,6 +127,7 @@ export const Upload:React.FC<UploadProps>=(props)=>{
         onChange={handlefileInputChange}
         ref={fileInputRef}
       />
+      <UploadList fileList={fileList}></UploadList>
     </div>
   )
 }
