@@ -4,9 +4,9 @@ import Button from '../button/button'
 import UploadList from './UploadList'
 export type UploadFileStatus = "ready" | "uploading"|"success"|"error"
 export interface UploadFile{
-  uid:string
   size:number
   name:string
+  uid?:string
   status?:UploadFileStatus
   percent?:number
   raw?:File
@@ -16,11 +16,11 @@ export interface UploadFile{
 export interface UploadProps{
   action:string
   defaultFileList:UploadFile[]
-  onProgress?:(percentage:number,file:File)=>void
-  onSuccess?:(data:any,file:File)=>void
-  onError?:(err:any,file:File)=>void
-  beforeUpload?:(file:File)=>boolean | Promise<File>
-  onChange?:(file:File)=>void
+  onProgress?:(percentage:number,file:UploadFile)=>void
+  onSuccess?:(data:any,file:UploadFile)=>void
+  onError?:(err:any,file:UploadFile)=>void
+  beforeUpload?:(file:UploadFile)=>boolean | Promise<UploadFile>
+  onChange?:(file:UploadFile)=>void
   onRemove?:(file:UploadFile)=>void
   name?:string
   headers?:Record<string,any>
@@ -71,12 +71,12 @@ export const Upload:React.FC<UploadProps>=(props)=>{
   const handlefileInputChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
     const files = e.target.files
     if (!files) return
-    uploadFiles(files)
+    uploadFiles([...files])
     if (fileInputRef.current) {
       fileInputRef.current.value = ""
     }
   }
-  const uploadFiles = (files:FileList)=>{
+  const uploadFiles = (files:File[])=>{
     let arrayFile = Array.from(files) 
     arrayFile.forEach(file=>{
       if (!beforeUpload) {
@@ -84,9 +84,7 @@ export const Upload:React.FC<UploadProps>=(props)=>{
       }else{
         const result = beforeUpload(file)
         if (result && result instanceof Promise) {
-          result.then(processedFile=>{
-            uploadRequest(processedFile)
-          })
+          result.then(processedFile=>uploadRequest(processedFile as File))
         }else if (result !== false) {
           uploadRequest(file)
         }
