@@ -25,7 +25,7 @@ export interface UploadProps{
   name?:string
   headers?:Record<string,any>
   data?:Record<string , any>
-  withCredentials:boolean
+  withCredentials?:boolean
 }
 
 
@@ -95,7 +95,7 @@ export const Upload:React.FC<UploadProps>=(props)=>{
     let _file:UploadFile = {
       uid:Date.now()+'upload-file',
       status:"ready",
-      name:file.name,
+      name:name || file.name,
       size:file.size,
       percent:0,
       raw:file
