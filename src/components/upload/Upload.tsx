@@ -23,7 +23,7 @@ export interface UploadProps{
   onChange?:(file:File)=>void
   onRemove?:(file:UploadFile)=>void
   name?:string
-  header?:Record<string,any>
+  headers?:Record<string,any>
   data?:Record<string , any>
   withCredentials:boolean
 }
@@ -33,7 +33,7 @@ export const Upload:React.FC<UploadProps>=(props)=>{
   const { 
     action , name,
     defaultFileList,
-    header,data,
+    headers,data,
     withCredentials,
     beforeUpload, 
     onChange ,  onError, 
@@ -108,8 +108,10 @@ export const Upload:React.FC<UploadProps>=(props)=>{
     })
     axios.post(action,formDate,{
       headers:{ 
-        "content-type":"multipart/form-data"
+        "content-type":"multipart/form-data",
+        ...headers
       },
+      withCredentials,
       onUploadProgress:(e)=>{
         let percentage = Math.floor(Math.round(e.loaded * 100)/e.total || 0)
         if (percentage<100) {
