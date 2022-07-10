@@ -16,6 +16,7 @@ export interface UploadFile{
 export interface UploadProps{
   action:string
   defaultFileList:UploadFile[]
+  children?:React.ReactNode
   onProgress?:(percentage:number,file:UploadFile)=>void
   onSuccess?:(data:any,file:UploadFile)=>void
   onError?:(err:any,file:UploadFile)=>void
@@ -33,11 +34,12 @@ export interface UploadProps{
 
 export const Upload:React.FC<UploadProps>=(props)=>{
   const { 
-    action , name,
+    action,name,
     defaultFileList,
     headers,data,
     withCredentials,
-    accept , multiple,
+    accept,multiple,
+    children,
     beforeUpload, 
     onChange ,  onError, 
     onProgress, onSuccess,
@@ -135,10 +137,11 @@ export const Upload:React.FC<UploadProps>=(props)=>{
 
   return (
     <div className='viking-upload-component'>
-      <Button 
-        btnType={"primary"}
-        onClick={ handleClick }
-      >upload</Button>
+     <div className='viking-upload-input' 
+        style={{ display:"inline-block" }}
+        onClick={handleClick}>
+          { children }
+     </div>
       <input 
         type="file" 
         className='viking-file-input'  
