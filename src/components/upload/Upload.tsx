@@ -26,6 +26,8 @@ export interface UploadProps{
   headers?:Record<string,any>
   data?:Record<string , any>
   withCredentials?:boolean
+  accept?:string
+  multiple?:boolean
 }
 
 
@@ -35,6 +37,7 @@ export const Upload:React.FC<UploadProps>=(props)=>{
     defaultFileList,
     headers,data,
     withCredentials,
+    accept , multiple,
     beforeUpload, 
     onChange ,  onError, 
     onProgress, onSuccess,
@@ -144,6 +147,8 @@ export const Upload:React.FC<UploadProps>=(props)=>{
         style={{ display:"none" }}
         onChange={handlefileInputChange}
         ref={fileInputRef}
+        accept={accept}
+        multiple={multiple}
       />
       <UploadList fileList={fileList} onRemove={handleRemove}></UploadList>
     </div>
