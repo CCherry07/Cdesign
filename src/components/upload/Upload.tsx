@@ -103,7 +103,7 @@ export const Upload:React.FC<UploadProps>=(props)=>{
       percent:0,
       raw:file
     }
-    setFileList([_file,...fileList])
+    setFileList(fileList=>[_file,...fileList])
     const formDate = new FormData()
     formDate.append(name ||file.name , file)
     data && Object.keys(data).forEach(payloadKey=>{
