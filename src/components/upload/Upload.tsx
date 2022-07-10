@@ -1,7 +1,7 @@
 import React, {useRef , useState} from 'react'
 import axios from 'axios'
-import Button from '../button/button'
 import UploadList from './UploadList'
+import Dragger from './Dragger'
 export type UploadFileStatus = "ready" | "uploading"|"success"|"error"
 export interface UploadFile{
   size:number
@@ -16,6 +16,7 @@ export interface UploadFile{
 export interface UploadProps{
   action:string
   defaultFileList:UploadFile[]
+  drag?:boolean
   children?:React.ReactNode
   onProgress?:(percentage:number,file:UploadFile)=>void
   onSuccess?:(data:any,file:UploadFile)=>void
@@ -39,7 +40,7 @@ export const Upload:React.FC<UploadProps>=(props)=>{
     headers,data,
     withCredentials,
     accept,multiple,
-    children,
+    drag,children,
     beforeUpload, 
     onChange ,  onError, 
     onProgress, onSuccess,
@@ -73,12 +74,12 @@ export const Upload:React.FC<UploadProps>=(props)=>{
   const handlefileInputChange = (e:React.ChangeEvent<HTMLInputElement>)=>{
     const files = e.target.files
     if (!files) return
-    uploadFiles([...files])
+    uploadFiles(files)
     if (fileInputRef.current) {
       fileInputRef.current.value = ""
     }
   }
-  const uploadFiles = (files:File[])=>{
+  const uploadFiles = (files:FileList)=>{
     let arrayFile = Array.from(files) 
     arrayFile.forEach(file=>{
       if (!beforeUpload) {
@@ -140,7 +141,7 @@ export const Upload:React.FC<UploadProps>=(props)=>{
      <div className='viking-upload-input' 
         style={{ display:"inline-block" }}
         onClick={handleClick}>
-          { children }
+          { drag ? <Dragger onFiles={(files)=>{uploadFiles(files)}}> { children } </Dragger> :children }
      </div>
       <input 
         type="file" 
