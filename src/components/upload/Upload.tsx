@@ -22,13 +22,19 @@ export interface UploadProps{
   beforeUpload?:(file:File)=>boolean | Promise<File>
   onChange?:(file:File)=>void
   onRemove?:(file:UploadFile)=>void
+  name?:string
+  header?:Record<string,any>
+  data?:Record<string , any>
+  withCredentials:boolean
 }
 
 
 export const Upload:React.FC<UploadProps>=(props)=>{
   const { 
-    action ,
+    action , name,
     defaultFileList,
+    header,data,
+    withCredentials,
     beforeUpload, 
     onChange ,  onError, 
     onProgress, onSuccess,
@@ -96,7 +102,10 @@ export const Upload:React.FC<UploadProps>=(props)=>{
     }
     setFileList([_file,...fileList])
     const formDate = new FormData()
-    formDate.append(file.name , file)
+    formDate.append(name ||file.name , file)
+    data && Object.keys(data).forEach(payloadKey=>{
+      formDate.append(payloadKey,data[payloadKey])
+    })
     axios.post(action,formDate,{
       headers:{ 
         "content-type":"multipart/form-data"
