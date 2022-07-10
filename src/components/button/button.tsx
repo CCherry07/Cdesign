@@ -18,6 +18,7 @@ interface BaseButtonProps {
   /** 设置 Link 链接 */
   href?: string;
 }
+
 type NativeButtonProps = BaseButtonProps & ButtonHTMLAttributes<HTMLElement>;
 type AnchorButtonProps = BaseButtonProps & AnchorHTMLAttributes<HTMLElement>;
 export type ButtonProps = Partial<NativeButtonProps & AnchorButtonProps>;
@@ -39,6 +40,7 @@ export const Button: FC<ButtonProps> = (props) => {
     [`btn-${size}`]: size,
     disabled: (btnType === 'link') && disabled,
   });
+  
   if (btnType === 'link' && href) {
     return (
       <a
