@@ -1,4 +1,9 @@
 import { useDebounce } from './useDebounce'
-import { useClickTargetOutsite } from './useClickTargetOutSide'
+import { useClickTargetOutsite } from './dom/useClickTargetOutSide'
+import { useDocTitle } from './dom/useDocTitle'
+import { useMuntedRef } from './dom/useMuntedRef'
 
-export {useDebounce,useClickTargetOutsite};
+export { useDebounce};
+
+// dom hooks
+export { useClickTargetOutsite , useDocTitle ,useMuntedRef }
