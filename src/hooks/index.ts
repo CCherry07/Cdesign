@@ -4,7 +4,8 @@ import { useDocTitle } from './dom/useDocTitle'
 import { useMuntedRef } from './dom/useMuntedRef'
 import { useMount } from './dom/useMount'
 import { useUnMount } from './dom/useUnMount'
-export { useDebounce};
+import { useAsync } from './useAsync'
+export { useDebounce , useAsync};
 
 // dom hooks
 export { useClickTargetOutsite , useDocTitle ,useMuntedRef , useMount ,useUnMount }
