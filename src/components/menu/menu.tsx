@@ -27,7 +27,7 @@ const Menu:MenuRc = (props) => {
     defaultIndext, className, mode, style,defaultOpenSubMenus, onSelect, children,
   } = props;
   const [currentActive, setActive] = useState(defaultIndext);
-  const classes = classNames('viking-menu', className, {
+  const classes = classNames('cd-menu', className, {
     'menu-vertical': mode === 'vertical',
     "menu-horizontal":mode !== "vertical"
   });

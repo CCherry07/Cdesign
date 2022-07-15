@@ -11,7 +11,7 @@ export const Dragger:React.FC<DraggerProps> = (props)=>{
   const { onFiles , children } = props
   const [ dragOver , setDragOver ] = useState(false)
 
-  const classes = classNames("viking-uploader-dragger",{
+  const classes = classNames("cd-uploader-dragger",{
           "is-dragover":dragOver
     }) 
   

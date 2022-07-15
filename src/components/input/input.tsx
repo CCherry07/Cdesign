@@ -14,7 +14,7 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLElement> , "siz
 }
 export const Input:React.FC<InputProps> = (props)=>{
   const { disabled , size , style, icon , prepand , append , children, ...restProps } = props
-  const classes = classNames("viking-input-wrapper",{
+  const classes = classNames("cd-input-wrapper",{
     [`input-size-${size}`]:size,
     "is-disabled":disabled,
     "input-group":prepand || append,
@@ -36,13 +36,13 @@ export const Input:React.FC<InputProps> = (props)=>{
 
   return (
     <div className={classes} style={style}>
-      { append && <div className="viking-input-group-append"> { append }</div> }
+      { append && <div className="cd-input-group-append"> { append }</div> }
       <input 
-        className="viking-input-inner"
+        className="cd-input-inner"
         disabled={disabled}
         {...restProps}
       />
-      { prepand && <div className="viking-input-group-prepand"> { prepand }</div> }
+      { prepand && <div className="cd-input-group-prepand"> { prepand }</div> }
     </div>
   )
 }

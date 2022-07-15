@@ -30,10 +30,10 @@ const TestMenu:React.FC<MenuProps> = (props)=>{
 
 const createCssfile = ()=>{
   const cssString = `
-    .viking-submenu {
+    .cd-submenu {
       display:none;
     }
-    .viking-submenu.menu-opened{
+    .cd-submenu.menu-opened{
       display:block;
     }
   ` 
@@ -54,7 +54,7 @@ describe("test Menu",async()=>{
   it("test The Default Menu",async()=>{
       expect(menuItem).toBeInTheDocument()
       expect(menuItem.tagName).toEqual('UL')
-      expect(menuItem).toHaveClass('viking-menu')
+      expect(menuItem).toHaveClass('cd-menu')
       expect(activeItem).toHaveClass('menu-item is-active')
       expect(disabledItem).toHaveClass("menu-item is-disabled")
       expect(menuItem.querySelectorAll(":scope > li").length).toBe(4)

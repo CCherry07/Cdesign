@@ -11,12 +11,12 @@ export interface ProgressProps {
 export const Progress:React.FC<ProgressProps> = (props)=> {
   const {percent , showText , strokeHight ,styles ,theme} = props
   return (
-    <div className="viking-progress-bar" style={styles}>
+    <div className="cd-progress-bar" style={styles}>
       <div 
-        className="viking-progress-bar-outer"
+        className="cd-progress-bar-outer"
         style={{height:`${strokeHight}px`}}
       >
-        <div className={`viking-progress-bar-inner color-${theme}`} style={{width:`${percent}%`}}>
+        <div className={`cd-progress-bar-inner color-${theme}`} style={{width:`${percent}%`}}>
           { showText && <span className="inner-text">{ `${percent}%` }</span> }
         </div>
       </div>

@@ -1,4 +1,4 @@
-.viking-menu {
+.cd-menu {
   display: flex;
   flex-wrap: wrap;
   padding-left: 0;
@@ -49,7 +49,7 @@
       transform: rotate(180deg) !important;
     }
   }
-  .viking-submenu {
+  .cd-submenu {
     list-style:none;
     padding-left: 0;
     white-space: nowrap;
@@ -64,7 +64,7 @@
       }
     }
   }
-  .viking-submenu.menu-opened {
+  .cd-submenu.menu-opened {
     display: block;
   }
 }
@@ -72,7 +72,7 @@
   >.menu-item {
     border-bottom: $menu-item-active-border-width solid transparent;
   }
-  .viking-submenu {
+  .cd-submenu {
     position: absolute;
     background: $white;
     z-index: 100;
