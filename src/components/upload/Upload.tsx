@@ -137,15 +137,15 @@ export const Upload:React.FC<UploadProps>=(props)=>{
   }
 
   return (
-    <div className='viking-upload-component'>
-     <div className='viking-upload-input' 
+    <div className='cd-upload-component'>
+     <div className='cd-upload-input' 
         style={{ display:"inline-block" }}
         onClick={handleClick}>
           { drag ? <Dragger onFiles={(files)=>{uploadFiles(files)}}> { children } </Dragger> :children }
      </div>
       <input 
         type="file" 
-        className='viking-file-input'  
+        className='cd-file-input'  
         style={{ display:"none" }}
         onChange={handlefileInputChange}
         ref={fileInputRef}

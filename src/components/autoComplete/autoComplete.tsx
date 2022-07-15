@@ -37,7 +37,7 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
     setOptions([])
   })
   
-  const classes = classNames('viking-auto-complete',className)
+  const classes = classNames('cd-auto-complete',className)
 
   useEffect(()=>{
     if (isVoid(debounceValue) || !retrySearch.current) return setOptions([])
@@ -108,7 +108,7 @@ export const AutoComplete:React.FC<AutoCompleteProps> = (props)=>{
 
   const generateDrodown = () =>{
     return (
-      <ul className='viking-suggestion-list'>
+      <ul className='cd-suggestion-list'>
         { loading && (<div className='suggestions-loading-icon'>
             <Icon icon={"spinner"} spin/>
         </div>) }
