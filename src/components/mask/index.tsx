@@ -1,3 +1,3 @@
-import { Mark } from './mark';
+import { Mark } from './Mark';
 
 export default Mark
