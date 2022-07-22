@@ -11,3 +11,13 @@ export const subset = <
   );
   return Object.fromEntries(filteredEntries) as Pick<O, K>;
 };
+
+export const clearObject=(target:Record<string,any>)=>{
+  const resObj = {...target}
+  Object.keys(resObj).forEach((key:string)=>{
+    if (isVoid(resObj[key])) {
+        delete resObj[key]
+    }
+  })
+  return resObj
+}
