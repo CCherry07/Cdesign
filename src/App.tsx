@@ -1,28 +1,22 @@
-import { Upload, UploadFile } from './components/upload/Upload';
-import "./app.scss"
-import { useUnMount } from './hooks/dom/useUnMount';
-import { useState } from 'react';
-import { useMount } from './hooks/dom/useMount';
+import React, { useState } from 'react'
 
-
-const Component = ()=>{
-  useUnMount(()=>{
-    console.log("组件卸载了");
-  })
-  useMount(()=>{
-    console.log("组件安装了");
-  })
-  return (<div>
-    123
-  </div>)
+const Component = (props:{slot:React.ReactNode,setCount:React.Dispatch<React.SetStateAction<number>>})=>{
+  const {slot,setCount} = props
+  return <div>
+  <button onClick={()=>setCount((count)=>++count)}>add</button>
+    {slot}
+  </div>
+}
+const SlotComponent = (props:{count:number})=>{
+  const {count} = props
+  return (<div>{count}</div>)
 }
 function App() {
-  const [show , setShow] = useState(true)
+  const [count , setCount] = useState(0)
 
   return (
     <div className="App">
-     {show ?<Component></Component>:null}
-      <button onClick={()=>setShow(!show)}> asd </button>
+      <Component setCount={setCount} slot={SlotComponent({count})}></Component>
     </div>
   );
 }
