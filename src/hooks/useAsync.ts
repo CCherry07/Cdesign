@@ -15,6 +15,17 @@ const defaultInitState: State<null> = {
 const defaultConfig = {
   processErrorBySelf: false
 }
+type actionType = "idle" | "loading" | "error" | "success"
+const reducer = <D>(state: State<D>, action: { type: actionType, data: D | null, error: { message: any } | null }) => {
+  switch (action.type) {
+    case "success":
+      return { ...state, ...action, status: "success" }
+    case "error":
+      return { ...state, ...action, status: "error" }
+    default:
+      throw new Error(" no matching action ！")
+  }
+}
 
 export const useAsync = <D>(initState?: State<D>, initConfig?: typeof defaultConfig) => {
   const config = { ...defaultConfig, ...initConfig }
