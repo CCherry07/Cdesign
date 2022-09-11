@@ -37,7 +37,7 @@ export const useAsync = <D>(initState?: State<D>, initConfig?: typeof defaultCon
   const muntedRef = useMuntedRef()
 
   const run = useCallback((promise: Promise<D>, runConfig?: { retry: () => Promise<D> }) => {
-    if (!promise || !promise.then) {
+    if (!(promise instanceof Promise<D>)) {
       throw new Error("please Pass In The PromiseType !");
     }
     setReTry(() => () => {
