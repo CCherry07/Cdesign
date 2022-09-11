@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react"
+import { useCallback, useReducer, useState } from "react"
 import { useMuntedRef } from "./dom/useMuntedRef"
 
 interface State<D> {
@@ -15,31 +15,20 @@ const defaultInitState: State<null> = {
 const defaultConfig = {
   processErrorBySelf: false
 }
-type actionType = "idle" | "loading" | "error" | "success"
-const reducer = <D>(state: State<D>, action: { type: actionType, data: D | null, error: { message: any } | null }) => {
-  switch (action.type) {
-    case "success":
-      return { ...state, ...action, status: "success" }
-    case "error":
-      return { ...state, ...action, status: "error" }
-    default:
-      throw new Error(" no matching action ！")
-  }
-}
 
 export const useAsync = <D>(initState?: State<D>, initConfig?: typeof defaultConfig) => {
   const config = { ...defaultConfig, ...initConfig }
-  const [state, setState] = useState<State<D>>({
+  const [state, dispatch] = useReducer((state: State<D>, action: Partial<State<D>>) => ({ ...state, ...action }), {
     ...defaultInitState,
     ...initState
   })
   const [retry, setReTry] = useState(() => () => { })
-  const setData = (data: D) => setState({
+  const setData = (data: D) => dispatch({
     data,
     status: "success",
     error: null
   })
-  const setError = (error: Error) => setState({
+  const setError = (error: Error) => dispatch({
     data: null,
     status: "error",
     error
@@ -56,7 +45,7 @@ export const useAsync = <D>(initState?: State<D>, initConfig?: typeof defaultCon
         run(runConfig.retry(), runConfig)
       }
     })
-    setState({ ...state, status: "loading" })
+    dispatch({ ...state, status: "loading" })
     return promise.then(data => {
       if (muntedRef.current) {
         setData(data)
