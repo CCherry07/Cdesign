@@ -1,4 +1,4 @@
-export const isVoid =(value:unknown)=>value === (undefined || null || "") ? true :false
+export const isVoid = (value: unknown) => value === (undefined || null || "") ? true : false
 export const subset = <
   O extends { [key in string]: unknown },
   K extends keyof O
@@ -12,11 +12,11 @@ export const subset = <
   return Object.fromEntries(filteredEntries) as Pick<O, K>;
 };
 
-export const clearObject=(target:Record<string,any>)=>{
-  const resObj = {...target}
-  Object.keys(resObj).forEach((key:string)=>{
+export const clearObject = (target: Record<string, unknown>) => {
+  const resObj = { ...target }
+  Object.keys(resObj).forEach((key: string) => {
     if (isVoid(resObj[key])) {
-        delete resObj[key]
+      delete resObj[key]
     }
   })
   return resObj
