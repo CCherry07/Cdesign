@@ -21,14 +21,14 @@ export function useFeature<D extends { children: D[] }, K extends keyof D>(list:
   function getAuth(...args: D[K][]): GetAuth<D, K> | ((flag?: any) => any) {
     let idx = 0;
     while (idx < args.length) {
-      setTarget(currentList.find((item: any) => item[key] === args[idx]) as D);
-      if (target) {
-        setCurrentList(target.children);
-      }
-      if (target === undefined) {
+      const tempTarget = currentList.find((item) => item[key] === args[idx]);
+      if (tempTarget) {
+        setTarget(tempTarget);
+        setCurrentList(tempTarget.children);
+      }else{
         setCurrentList(list);
         return reduce(false);
-      };
+      }
       idx++;
     }
     return (...args: D[K][]) => {
