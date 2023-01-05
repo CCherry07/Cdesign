@@ -1,11 +1,13 @@
+import { useState } from "react";
+
 interface GetAuth<D, K extends keyof D> {
   (): D | false
   (...args: D[K][]): GetAuth<D, K>
 }
 
 function reduce(res: any) {
-  return (flag?: any) => {
-    if (flag === undefined) {
+  return (...args: any) => {
+    if (!args.length) {
       return res;
     } else {
       return reduce(res)
@@ -14,27 +16,27 @@ function reduce(res: any) {
 }
 
 export function useFeature<D extends { children: D[] }, K extends keyof D>(list: D[], key: K): GetAuth<D, K> {
-  let current: D[] = list;
-  let target: D
+  const [currentList, setCurrentList] = useState(list)
+  const [target, setTarget] = useState<D>()
   function getAuth(...args: D[K][]): GetAuth<D, K> | ((flag?: any) => any) {
     let idx = 0;
     while (idx < args.length) {
-      target = current.find((item: any) => item[key] === args[idx]) as D;
+      setTarget(currentList.find((item: any) => item[key] === args[idx]) as D);
       if (target) {
-        current = target.children;
+        setCurrentList(target.children);
       }
       if (target === undefined) {
-        current = list;
+        setCurrentList(list);
         return reduce(false);
       };
       idx++;
     }
-    return (...args1: D[K][]) => {
-      if (!args1.length) {
-        current = list; // 重置
+    return (...args: D[K][]) => {
+      if (!args.length) {
+        setCurrentList(list);
         return target;
       } else {
-        return getAuth(...args1);
+        return getAuth(...args);
       }
     }
   }
